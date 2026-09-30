@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>噜噜的潮汕三天两夜出行</title>
+<style>
+  :root{
+    --bg:#f4eede; --bg2:#eae1cd;
+    --card:#fffdf6; --card2:#f1e9d6;
+    --ink:#33291f; --ink2:#6d5f4e; --ink3:#a4937b;
+    --line:#e2d3bb;
+    --brand:#c1542b; --brand2:#a33e1c;
+    --gold:#c58a31; --teal:#4f7a68;
+    --warn:#b24524; --warnbg:#fbeadb; --ok:#3f6b4f;
+    --r:18px; --rr:26px;
+    --sh:0 8px 26px rgba(110,78,40,.10); --sh2:0 18px 44px rgba(110,78,40,.16);
+    --maxw:1120px;
+    --font:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html[data-theme="dark"]{
+    --bg:#141a16; --bg2:#1b221c;
+    --card:#222b23; --card2:#2b352c;
+    --ink:#f0e7d6; --ink2:#c3b6a0; --ink3:#93876f;
+    --line:#39423a;
+    --brand:#de8a5c; --brand2:#ef9a6e;
+    --gold:#e2ae58; --teal:#8cb09a;
+    --warn:#f09a66; --warnbg:#3a2b20; --ok:#93c09f;
+    --sh:0 8px 26px rgba(0,0,0,.35); --sh2:0 18px 44px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+  body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 50% at 90% -5%,rgba(197,138,49,.13),transparent 60%),radial-gradient(50% 40% at -5% 8%,rgba(79,122,104,.12),transparent 60%)}
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 clamp(14px,4vw,30px)}
+  a{color:var(--brand);text-decoration:none}
+  button{font-family:inherit;cursor:pointer}
+  h2{line-height:1.28;margin:0 0 .4em}
+
+  .icon{width:18px;height:18px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px}
+  .ic-lg{width:40px;height:40px;stroke-width:1.5}
+
+  /* glass top bar */
+  .bar{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .bar-in{display:flex;align-items:center;gap:10px;padding:11px clamp(14px,4vw,30px);max-width:var(--maxw);margin:0 auto}
+  .brand{font-weight:800;font-size:16px;display:flex;align-items:center;gap:8px;margin-right:auto}
+  .bmark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff}
+  .bar .tz{font-family:var(--mono);font-size:10.5px;color:var(--ink3);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+  .iconbtn{width:34px;height:34px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .iconbtn:hover{color:var(--brand)}
+
+  /* hero */
+  .hero{position:relative;border-radius:var(--rr);padding:clamp(20px,5vw,36px);color:#fff;background:linear-gradient(130deg,#c1542b 0%,#a33e1c 55%,#7d3a1c 100%);box-shadow:var(--sh2);overflow:hidden;margin-top:18px}
+  .hero::after{content:"";position:absolute;right:-40px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),transparent 60%)}
+  .hlab{font-size:11.5px;letter-spacing:.14em;opacity:.85;font-weight:700;display:flex;align-items:center;gap:6px}
+  .hlab::before{content:"";width:18px;height:2px;background:#fff;border-radius:2px}
+  .hnext{font-size:clamp(19px,4.6vw,29px);font-weight:800;margin-top:8px;max-width:86%;line-height:1.25}
+  .hhint{font-size:13px;opacity:.92;margin-top:6px;max-width:90%;color:#ffe9da}
+  .clock{display:flex;gap:clamp(8px,2.2vw,14px);margin-top:20px}
+  .clock .c{flex:1 1 0;min-width:62px;text-align:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);border-radius:16px;padding:10px 4px 8px}
+  .clock .v{font-family:var(--mono);font-size:clamp(22px,5vw,30px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+  .clock .k{font-size:11px;opacity:.85;margin-top:5px;letter-spacing:.1em}
+  .hero .now{position:absolute;top:16px;right:18px;font-family:var(--mono);font-size:10.5px;opacity:.82;text-align:right}
+
+  /* day switch */
+  .switch{position:sticky;top:57px;z-index:50;display:flex;gap:6px;padding:10px clamp(14px,4vw,30px);max-width:var(--maxw);margin:0 auto;border-radius:16px;overflow-x:auto;scrollbar-width:none}
+  .switch::-webkit-scrollbar{display:none}
+  .switch button{flex:1 0 auto;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink2);padding:9px 14px;font-size:12.5px;font-weight:700;white-space:nowrap;transition:all .2s}
+  .switch button .dd{display:block;font-size:10px;color:var(--ink3);font-weight:600;margin-top:1px}
+  .switch button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .switch button.on .dd{opacity:.7}
+
+  /* snap pages */
+  .pages{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding-bottom:8px;scrollbar-width:none}
+  .pages::-webkit-scrollbar{display:none}
+  .page{flex:0 0 calc(100% - 20px);scroll-snap-align:center;min-width:0}
+  @media (min-width:860px){ .page{flex-basis:100%;} }
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(15px,3vw,22px);box-shadow:var(--sh)}
+  .step{display:grid;grid-template-columns:62px 24px 1fr;column-gap:10px;padding-bottom:14px;position:relative}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:86px;top:28px;bottom:4px;width:2px;background:var(--line)}
+  .step:last-child::before{display:none}
+  .step .tt{text-align:right;font-family:var(--mono);font-weight:800;color:var(--brand);font-size:13.5px;padding-top:3px}
+  .step .dot{position:absolute;left:79px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 18%,transparent)}
+  .step .w{font-weight:700;font-size:15px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  .step .d{font-size:13px;color:var(--ink2);margin-top:2px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+  .chip{font-size:11px;font-weight:700;border-radius:999px;padding:3px 10px;display:inline-flex;align-items:center;gap:4px}
+  .chip.c-train{background:var(--brand);color:#fff}
+  .chip.c-car{background:var(--teal);color:#fff}
+  .chip.c-food{background:var(--gold);color:#fff}
+  .chip.c-do{background:color-mix(in srgb,var(--ok) 16%,var(--card));color:var(--ok);border:1px solid var(--line)}
+  .chip.c-warn{background:var(--warn);color:#fff}
+  .navlink{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;color:var(--brand);background:color-mix(in srgb,var(--brand) 10%,var(--card));border:1px solid color-mix(in srgb,var(--brand) 30%,var(--line));border-radius:9px;padding:4px 10px}
+  .navlink:hover{background:color-mix(in srgb,var(--brand) 16%,var(--card))}
+
+  .dayh{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .staytag{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--brand);background:var(--card2);border:1px solid var(--line);padding:4px 12px;border-radius:999px;font-weight:700}
+
+  .sec{display:flex;align-items:baseline;gap:10px;margin:30px 0 12px;flex-wrap:wrap}
+  .sec .no{font-family:var(--mono);font-size:12px;color:var(--brand)}
+  .sec h2{font-size:clamp(19px,3vw,25px);margin:0}
+
+  .grid2{display:grid;gap:14px}
+  @media (min-width:760px){ .grid2{grid-template-columns:1fr 1fr} }
+  .order{border:1px solid var(--line);border-radius:16px;padding:15px 16px;background:var(--card);position:relative}
+  .order .k{font-size:11.5px;color:var(--ink3);letter-spacing:.06em;display:flex;align-items:center;gap:5px}
+  .order .v{font-weight:800;font-size:15.5px;margin-top:3px;line-height:1.4}
+  .order .t{font-family:var(--mono);font-size:12px;color:var(--brand);margin-top:3px}
+  .order .s{font-size:13px;color:var(--ink2);margin-top:3px}
+  .pill{display:inline-block;font-size:10.5px;font-weight:800;border-radius:999px;padding:2px 9px;position:absolute;top:12px;right:12px}
+  .pill.ok{background:color-mix(in srgb,var(--ok) 14%,var(--card));color:var(--ok)}
+  .pill.wait{background:var(--warnbg);color:var(--warn)}
+  .pill.stay{background:color-mix(in srgb,var(--gold) 15%,var(--card));color:var(--gold)}
+  .kvrow{display:flex;gap:12px;align-items:flex-start;padding:9px 0}
+
+  ul.todo{list-style:none;margin:0;padding:0}
+  ul.todo li{display:flex;gap:11px;padding:11px 2px;border-bottom:1px dashed var(--line);font-size:14px;align-items:flex-start}
+  ul.todo li:last-child{border-bottom:none}
+  .ic{flex:0 0 30px;height:30px;border-radius:9px;background:var(--card2);display:grid;place-items:center;color:var(--brand);font-weight:800}
+  .ic.cm{color:var(--ok)}
+  .todo .done{opacity:.55}
+  .st{font-size:10.5px;font-weight:800;border-radius:999px;padding:2px 9px;margin-left:6px;white-space:nowrap}
+  .st.g{background:color-mix(in srgb,var(--ok) 14%,var(--card));color:var(--ok)}
+  .st.o{background:var(--warnbg);color:var(--warn)}
+
+  .tips{display:grid;gap:12px;grid-template-columns:1fr}
+  @media (min-width:720px){ .tips{grid-template-columns:repeat(3,1fr)} }
+  .tip{border:1px solid var(--line);border-radius:16px;padding:14px 16px;background:var(--card);border-top:3px solid var(--teal);box-shadow:var(--sh)}
+  .tip .t{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+  .tip h3{margin:0;font-size:14px}
+  .tip p{margin:0;font-size:12.5px;color:var(--ink2)}
+  .tip .tic{width:30px;height:30px;border-radius:9px;background:color-mix(in srgb,var(--teal) 14%,var(--card));color:var(--teal);display:grid;place-items:center}
+
+  .warnbox{background:var(--warnbg);border:1px solid #e4bb96;border-radius:var(--r);padding:16px 18px;margin-bottom:12px}
+  .warnbox b.h{display:flex;align-items:center;gap:7px;color:var(--warn);font-size:15px;margin-bottom:6px}
+  .warnbox ul{margin:0;padding-left:19px;font-size:13px;color:var(--ink)}
+  .note{font-size:11.5px;color:var(--ink3);margin-top:10px;line-height:1.6}
+
+  footer{border-top:1px solid var(--line);margin-top:30px;padding:26px 0 96px;color:var(--ink3);font-size:12px}
+
+  .dock{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+  .dock a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--ink3);font-weight:600;padding:5px 2px;border-radius:10px}
+  .dock a.on{color:var(--brand);background:color-mix(in srgb,var(--brand) 10%,transparent)}
+  .dock .icon{width:20px;height:20px}
+  @media (max-width:760px){ .dock{display:flex} footer{padding-bottom:96px} .switch{position:static;background:transparent} }
+
+  @media print{ body{background:#fff} .bar,.dock,.switch,.hero .now{position:static} .card,.order,.tip,.warnbox,.hero{box-shadow:none;break-inside:avoid} .pages{overflow:visible;display:block} .page{flex:none} footer{padding-bottom:20px} }
+</style>
+</head>
+<body>
+
+<!-- icon defs -->
+<svg viewBox="0 0 24 24" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol viewBox="0 0 24 24" id="i-train"><path d="M4 16V8a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8"/><path d="M6 8 8 6h8l2 2"/><rect x="8" y="8.5" width="8" height="2.8" rx="1.3"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="16.5" cy="18.5" r="1.6"/><path d="M8 21.5 7 23M16 21.5l1 1.5"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-bed"><path d="M4 17V9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8"/><path d="M2 20h20M5 12h14"/><rect x="6.5" y="9.8" width="3" height="1.7" rx=".85"/><rect x="14.5" y="9.8" width="3" height="1.7" rx=".85"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-car"><path d="M5 10 6.6 6.5A2 2 0 0 1 8.5 5.4h7a2 2 0 0 1 1.9 1.1L19 10"/><rect x="3.5" y="10" width="17" height="6.5" rx="2"/><path d="M5 13h14"/><circle cx="8.5" cy="19" r="1.7"/><circle cx="15.5" cy="19" r="1.7"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-food"><path d="M4 10c0 4.42 3.6 8 8 8s8-3.58 8-8H4Z"/><path d="M9 20h6M12 18v2"/><path d="M16.2 3.5 13.5 8M18 5.5 15.5 9.4"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-walk"><circle cx="12" cy="4.5" r="1.8"/><path d="M12 6.5v4l-3.2 4.2M12 10.5l3 4.2M9.2 20l2-5M14.8 20l-2-5"/><path d="M7 8.5 12 10l5-1.5"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-nav"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-list"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-bell"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.4 2.2H4.6L6 16Z"/><path d="M10 21a2 2 0 0 0 4 0"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-img"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="9" cy="9.5" r="1.8"/><path d="m4.5 18 5-5 3 3 4-4 3.5 3.5"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-map"><path d="M3 6l6-2.5 6 2.5 6-2.5v15l-6 2.5-6-2.5-6 2.5Z"/><path d="M9 3.5v15M15 6v15"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-check"><path d="m5 13 4.5 4.5L19 7"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-user"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-globe"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.3 2.4 3.5 5.6 3.5 9S14.3 18.6 12 21c-2.3-2.4-3.5-5.6-3.5-9S9.7 5.4 12 3Z"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-battery"><rect x="2" y="8" width="17" height="8" rx="2"/><path d="M22 11v2M6 11v2M9.5 11v2M13 11v2"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-moon"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+  <symbol viewBox="0 0 24 24" id="i-clock"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+</defs></svg>
+
+<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">噜噜的潮汕三天两夜亲子出行</h1>
+
+<div class="bar">
+  <div class="bar-in">
+    <span class="brand"><span class="bmark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg></span>噜噜的潮汕三天两夜</span>
+    <span class="tz" id="curTz">时区 +08:00</span>
+    <button class="iconbtn" id="modeBtn" aria-label="切换昼夜"></button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- hero -->
+  <div class="hero">
+    <span class="now" id="nowClock"></span>
+    <div class="hlab">此刻关注 · NEXT</div>
+    <div class="hnext" id="nextLabel">…</div>
+    <div class="hhint" id="nextHint">…</div>
+    <div class="clock">
+      <div class="c"><div class="v" id="c-d">--</div><div class="k">天</div></div>
+      <div class="c"><div class="v" id="c-h">--</div><div class="k">时</div></div>
+      <div class="c"><div class="v" id="c-m">--</div><div class="k">分</div></div>
+      <div class="c"><div class="v" id="c-s">--</div><div class="k">秒</div></div>
+    </div>
+  </div>
+
+  <!-- day switch -->
+  <div class="switch" id="sw">
+    <button data-pg="ov" class="on">总览</button>
+    <button data-pg="d1"><span>DAY 1</span><span class="dd">泉州→潮州</span></button>
+    <button data-pg="d2"><span>DAY 2</span><span class="dd">汕头→揭阳</span></button>
+    <button data-pg="d3"><span>DAY 3</span><span class="dd">揭阳→泉州</span></button>
+  </div>
+
+  <!-- snap pages -->
+  <div class="pages" id="pages">
+
+    <!-- PAGE overview -->
+    <div class="page" id="p-ov">
+      <div class="card" style="padding:14px">
+        <svg viewBox="0 0 760 420" role="img" style="width:100%;height:auto" aria-labelledby="mt">
+          <title id="mt">潮汕三天两夜路线示意</title>
+          <rect width="760" height="420" rx="16" fill="var(--card2)"/>
+          <path d="M524 350 C600 280 716 300 760 240 L760 420 L440 420 Z" fill="color-mix(in srgb,var(--teal) 22%,transparent)"/>
+          <path d="M60 320 C150 280 230 300 330 270 C410 246 470 280 550 262" stroke="color-mix(in srgb,var(--ink2) 30%,transparent)" stroke-width="2" fill="none" stroke-dasharray="2 6"/>
+          <path d="M440 92 C380 150 290 182 232 238" stroke="var(--teal)" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="1 8"/>
+          <path d="M228 242 C290 300 252 352 314 384" stroke="var(--brand)" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="1 8"/>
+          <path d="M322 386 C288 336 236 326 202 296 C160 262 300 200 252 150 C230 126 300 96 300 96" stroke="var(--gold)" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="1 8" opacity="0"/>
+          <circle cx="316" cy="390" r="9" fill="#fff" stroke="var(--brand)" stroke-width="3.5"/>
+          <g font-family="var(--font)" text-anchor="middle">
+            <text x="446" y="76" font-size="18" font-weight="800" fill="var(--ink)">泉州</text>
+            <text x="196" y="230" font-size="18" font-weight="800" fill="var(--ink)">潮州</text>
+            <text x="340" y="404" font-size="18" font-weight="800" fill="var(--ink)">汕头</text>
+            <text x="150" y="288" font-size="18" font-weight="800" fill="var(--ink)">揭阳</text>
+            <text x="285" y="180" font-size="12.5" fill="var(--ink2)">潮汕站 · 换乘</text>
+            <text x="430" y="120" font-size="11" fill="var(--brand)" font-weight="700">D2311</text>
+            <text x="208" y="292" font-size="11" fill="var(--brand)" font-weight="700">G8484</text>
+            <text x="150" y="386" font-size="11" fill="var(--gold)" font-weight="700">G8483·D2326</text>
+          </g>
+          <g font-size="12" fill="#fff" font-weight="700"><circle cx="213" cy="243" r="16" fill="var(--brand)"/><text x="213" y="247" text-anchor="middle">住</text></g>
+          <g font-size="12" fill="#fff" font-weight="700"><circle cx="152" cy="280" r="16" fill="var(--brand)"/><text x="152" y="284" text-anchor="middle">住</text></g>
+          <g font-size="11" fill="var(--ink2)" text-anchor="middle"><text x="213" y="272">10/1晚·潮州</text><text x="112" y="306">10/2晚·揭阳</text></g>
+        </svg>
+      </div>
+      <div style="display:grid;gap:10px;margin-top:12px">
+        <div class="card">
+          <div style="font-weight:800;font-size:15px;display:flex;align-items:center;gap:7px"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bed"/></svg>两晚住宿</div>
+          <div style="margin-top:6px;display:grid;gap:2px">
+            <div class="kvrow"><span class="ic cm">1</span><div><div style="font-weight:700;font-size:14px">10/1 潮州古城潮枫路亚朵</div><div style="font-size:12.5px;color:var(--ink2)">古城边上 · 已订</div></div></div>
+            <div class="kvrow"><span class="ic cm">2</span><div><div style="font-weight:700;font-size:14px">10/2 揭阳楼·揭阳大道亚朵（V3.6）</div><div style="font-size:12.5px;color:var(--ink2)">揭阳楼广场旁 · 已订</div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="font-weight:800;font-size:15px;display:flex;align-items:center;gap:7px"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg>车次一览</div>
+          <div style="margin-top:8px;display:grid;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--brand)"><use href="#i-train"/></svg><span><b style="font-family:var(--mono)">D2311</b> 泉州08:57 → 潮汕11:08</span><span class="st g">已出票</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--brand)"><use href="#i-train"/></svg><span><b style="font-family:var(--mono)">G8484</b> 汕头18:40 → 揭阳19:28</span><span class="st g">已出票</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--brand)"><use href="#i-train"/></svg><span><b style="font-family:var(--mono)">G8483→D2326</b> 揭阳17:30 → 泉州20:05</span><span class="st g">已出票</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE day1 -->
+    <div class="page" id="p-d1">
+      <div class="card">
+        <div class="dayh">
+          <span style="font-weight:800;font-size:17px">DAY 1 · 10/1 周四</span>
+          <span style="font-size:12.5px;color:var(--ink2)">泉州 → 潮州</span>
+          <span class="staytag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><use href="#i-bed"/></svg>住 潮州古城亚朵</span>
+        </div>
+        <div class="steps">
+          <div class="step"><span class="dot"></span><div class="tt">08:57</div><div class="rail"></div><div><div class="w">D2311 泉州出发<span class="chip c-train">已出票</span></div><div class="d">泉州→潮汕 2h11m · 02车 · 候车室2号检票口 · 建议提前到站</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">11:08</div><div class="rail"></div><div><div class="w">抵达潮汕站</div><div class="d">打车进古城约40–50分钟、约40–50元（带娃建议网约车）</div><div class="chips"><a class="navlink" href="https://uri.amap.com/navigation?from=116.629,23.526,潮汕站&to=116.652,23.666,潮州古城牌坊街&mode=car&policy=1&coordinate=gaode" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>打车导航</a></div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">12:00</div><div class="rail"></div><div><div class="w">放行李 + 午餐<span class="chip c-food"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-food"/></svg>牛肉火锅</span></div><div class="d">阿彬牛肉火锅 / 官塘兄弟，给娃点清汤+软烂粿条</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">14:00</div><div class="rail"></div><div><div class="w">潮州古城 Citywalk<span class="chip c-car"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-walk"/></svg>步行</span></div><div class="d">牌坊街 → 开元寺 → 广济楼；石板路备背带</div><div class="chips"><a class="navlink" href="https://uri.amap.com/navigation?from=116.652,23.666,潮州古城牌坊街&to=116.671,23.664,广济桥&mode=foot&policy=1&coordinate=gaode" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-walk"/></svg>步行导航</a></div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">17:00</div><div class="rail"></div><div><div class="w">广济桥 · 看浮桥拆桥<span class="chip c-do"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>门票20</span></div><div class="d">「十八梭船廿四洲」· 17:30 浮桥开拆</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">19:00</div><div class="rail"></div><div><div class="w">晚餐 · 老城小吃<span class="chip c-food"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-food"/></svg>随逛随吃</span></div><div class="d">老彬蚝烙、刘卜卤鹅、胡荣泉鸭母捻、镇记牛杂</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">20:00</div><div class="rail"></div><div><div class="w">广济桥灯光秀<span class="chip c-do"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>可选</span></div><div class="d">夜景美但人多，怕挤可远远看几眼</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE day2 -->
+    <div class="page" id="p-d2">
+      <div class="card">
+        <div class="dayh">
+          <span style="font-weight:800;font-size:17px">DAY 2 · 10/2 周五</span>
+          <span style="font-size:12.5px;color:var(--ink2)">汕头 → 揭阳</span>
+          <span class="staytag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><use href="#i-bed"/></svg>住 揭阳楼亚朵</span>
+        </div>
+        <div class="steps">
+          <div class="step"><span class="dot"></span><div class="tt">08:30</div><div class="rail"></div><div><div class="w">退房，潮州 → 汕头<span class="chip c-car"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>方案二选一</span></div><div class="d">A.包车直达约1–1.5h（推荐）｜B.高铁折返约30min</div><div class="chips"><a class="navlink" href="https://uri.amap.com/navigation?from=116.652,23.666,潮州古城&to=116.694,23.360,汕头小公园&mode=car&policy=1&coordinate=gaode" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>包车/打车</a></div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">10:00</div><div class="rail"></div><div><div class="w">汕头小公园 + 老城<span class="chip c-car"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-walk"/></svg>步行</span></div><div class="d">中山纪念亭、百年骑楼街、民国老城</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">12:00</div><div class="rail"></div><div><div class="w">午餐<span class="chip c-food"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-food"/></svg>牛肉火锅</span></div><div class="d">潮皇叔（小公园店）、福合埕（福平路）、阿猴</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">14:00</div><div class="rail"></div><div><div class="w">亲子下午<span class="chip c-do"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-user"/></svg>可选</span></div><div class="d">潮博馆 / 西堤公园；累就老城茶馆歇脚</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">16:00</div><div class="rail"></div><div><div class="w">前往汕头站<span class="chip c-car"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>20–30min</span></div><div class="chips"><a class="navlink" href="https://uri.amap.com/navigation?from=116.694,23.360,汕头小公园&to=116.708,23.333,汕头站&mode=car&policy=1&coordinate=gaode" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>打车去车站</a></div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">18:40</div><div class="rail"></div><div><div class="w">G8484 汕头发车<span class="chip c-train"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg>已出票</span></div><div class="d">06车 · 约48分钟 → 19:28 到「揭阳站」；别在 19:15 的「揭阳机场站」下</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">19:28</div><div class="rail"></div><div><div class="w">到站 → 揭阳楼亚朵<span class="chip c-car"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>20–30min</span></div><div class="d">安顿后可夜宵（牛肉丸汤/粿条）</div><div class="chips"><a class="navlink" href="https://uri.amap.com/navigation?from=116.361,23.579,揭阳站&to=116.365,23.584,揭阳楼亚朵酒店&mode=car&coordinate=gaode" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>打车回酒店</a></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE day3 -->
+    <div class="page" id="p-d3">
+      <div class="card">
+        <div class="dayh">
+          <span style="font-weight:800;font-size:17px">DAY 3 · 10/3 周六</span>
+          <span style="font-size:12.5px;color:var(--ink2)">揭阳 → 泉州</span>
+          <span class="staytag">返程 泉州</span>
+        </div>
+        <div class="steps">
+          <div class="step"><span class="dot"></span><div class="tt">09:00</div><div class="rail"></div><div><div class="w">揭阳楼广场<span class="chip c-car"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-walk"/></svg>酒店旁</span></div><div class="d">酒店就在揭阳楼广场边</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">10:00</div><div class="rail"></div><div><div class="w">揭阳古城 Citywalk<span class="chip c-car"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-walk"/></svg>步行</span></div><div class="d">进贤门 → 揭阳学宫(周六开) → 城隍庙 → 中山路骑楼</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">12:30</div><div class="rail"></div><div><div class="w">午餐<span class="chip c-food"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-food"/></svg>老城小吃</span></div><div class="d">阿瑞蚝烙、揭阳老味道、糖葱薄饼、反沙咸蛋黄</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">14:30</div><div class="rail"></div><div><div class="w">前往揭阳站<span class="chip c-car"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>20–30min</span></div><div class="d">建议15:00前收尾出发，多留裕量（换乘紧张）</div><div class="chips"><a class="navlink" href="https://uri.amap.com/navigation?from=116.375,23.545,揭阳进贤门&to=116.361,23.579,揭阳站&mode=car&coordinate=gaode" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>打车去车站</a></div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">17:30</div><div class="rail"></div><div><div class="w">G8483 揭阳发车<span class="chip c-train"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg>已出票</span></div><div class="d">03车 · 17:53 到潮汕站（同站换乘 D2326）</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">18:10</div><div class="rail"></div><div><div class="w">换乘 D2326 潮汕发车<span class="chip c-warn">⚠ 换乘仅17分钟</span></div><div class="d">08车 · 20:05 到泉州 · 务必提前到潮汕站候车</div></div></div>
+          <div class="step"><span class="dot"></span><div class="tt">20:05</div><div class="rail"></div><div><div class="w">抵达泉州<span class="chip c-do">到家</span></div><div class="d">三天两夜收官</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- orders & todo & tips -->
+  <section>
+    <div class="sec"><span class="no">02</span><h2>已确认订单</h2></div>
+    <div class="grid2">
+      <div class="order"><span class="pill ok">已出票</span><div class="k"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg>动车 · 去程</div><div class="v">D2311 · 泉州 → 潮汕</div><div class="t">10/1 08:57 → 11:08</div><div class="s">02车 · 候车室2号检票口 · 二等座</div></div>
+      <div class="order"><span class="pill ok">已出票</span><div class="k"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg>动车 · 次日接续</div><div class="v">G8484 · 汕头 → 揭阳</div><div class="t">10/2 18:40 → 19:28 · 复兴号智能动车</div><div class="s">06车 · 下「揭阳站」，非「揭阳机场站」</div></div>
+      <div class="order"><span class="pill ok">均已出票</span><div class="k"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg>动车 · 返程中转</div><div class="v">G8483 → 同站换乘 → D2326</div><div class="t">10/3 揭阳17:30→潮汕17:53｜换乘17分｜潮汕18:10→泉州20:05</div><div class="s">G8483 03车 · D2326 08车 · 全程2h35m · 换乘较紧</div></div>
+      <div style="display:grid;gap:12px;align-content:start">
+        <div class="order"><span class="pill stay">已订</span><div class="k"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bed"/></svg>第 1 晚</div><div class="v">潮州古城潮枫路亚朵酒店</div><div class="s">潮州·古城/潮枫路</div></div>
+        <div class="order"><span class="pill stay">已订</span><div class="k"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bed"/></svg>第 2 晚</div><div class="v">揭阳楼·揭阳大道亚朵（V3.6）</div><div class="s">揭阳·揭阳楼广场旁</div></div>
+      </div>
+    </div>
+    <p class="note">地址/电话以订单为准；页面不显示订单号、证件号，可安全分享。</p>
+  </section>
+
+  <section>
+    <div class="sec"><span class="no">03</span><h2>待办清单</h2><span style="font-size:12px;color:var(--ink3)">办完告诉我，我来更新</span></div>
+    <div class="card">
+      <ul class="todo">
+        <li class="done"><span class="ic cm"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>D2311 泉州→潮汕</b><span class="st g">已出票</span><br><span style="font-size:12.5px;color:var(--ink2)">10/1 08:57 · 02车 · 候车室2号检票口</span></span></li>
+        <li><span class="ic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg></span><span><b>G8484 汕头→揭阳</b><span class="st g">已出票 · 06车</span><br><span style="font-size:12.5px;color:var(--ink2)">10/2 18:40 · 06车</span></span></li>
+        <li><span class="ic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg></span><span><b>G8483 揭阳→潮汕</b><span class="st g">已出票 · 03车</span><br><span style="font-size:12.5px;color:var(--ink2)">10/3 17:30 · 03车</span></span></li>
+        <li><span class="ic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg></span><span><b>D2326 潮汕→泉州</b><span class="st g">已出票 · 08车</span><br><span style="font-size:12.5px;color:var(--ink2)">10/3 18:10 · 同站换乘 · 08车</span></span></li>
+        <li class="done"><span class="ic cm"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>潮州潮枫路亚朵</b><span class="st g">已订</span><br><span style="font-size:12.5px;color:var(--ink2)">10/1 晚</span></span></li>
+        <li class="done"><span class="ic cm"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>揭阳楼·揭阳大道亚朵</b><span class="st g">已订</span><br><span style="font-size:12.5px;color:var(--ink2)">10/2 晚</span></span></li>
+        <li><span class="ic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bell"/></svg></span><span><b>确认 Day3 中转换乘方案</b><span class="st o">待办</span><br><span style="font-size:12.5px;color:var(--ink2)">换乘仅17分钟，提前到站 & 备选后班车</span></span></li>
+        
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec"><span class="no">04</span><h2>实用贴</h2></div>
+    <div class="tips">
+      <div class="tip"><div class="t"><span class="tic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-user"/></svg></span><h3>带娃节奏</h3></div><p>每天只排1–2个重点、留午休；古城石板路备背带。</p></div>
+      <div class="tip"><div class="t"><span class="tic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg></span><h3>打车贴士</h3></div><p>跨市/去车站用网约车；国庆古城易堵，短途步行。</p></div>
+      <div class="tip"><div class="t"><span class="tic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-globe"/></svg></span><h3>时区</h3></div><p>均为北京时间(+08:00)，倒计时为绝对时间，跨时区不错。</p></div>
+      <div class="tip"><div class="t"><span class="tic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg></span><h3>返程早订</h3></div><p>D2326/返程高峰务必提前抢票或候补。</p></div>
+      <div class="tip"><div class="t"><span class="tic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-food"/></svg></span><h3>清淡饮食</h3></div><p>潮汕菜偏咸重，给娃点白粥、清汤粿条、蒸蛋。</p></div>
+      <div class="tip"><div class="t"><span class="tic"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-battery"/></svg></span><h3>离线可用</h3></div><p>零外部依赖，存成文件/离线打开也能看。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec"><span class="no">05</span><h2>风险提醒</h2></div>
+    <div class="warnbox"><b class="h"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bell"/></svg>Day3 换乘仅约 17 分钟 · 最关键</b>
+      <ul><li>G8483 到潮汕站 17:53，D2326 18:10 发，带娃极易赶不上；D2326 为过路车，前段晚点会连锁。</li><li>建议：第三日早出发、提前到潮汕站候车；备选当晚后班车次返泉州。</li></ul>
+    </div>
+    <div class="warnbox"><b class="h"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bell"/></svg>其他确认</b>
+      <ul><li>Day2 潮州→汕头交通方式（包车 or 高铁折返）请确认。</li><li>G8484 下车认准「揭阳站」，非「揭阳机场站」。</li><li>车次/导航坐标/耗时请以 12306 与实时导航复核。</li><li>页面不展示订单号、证件号、房间号。</li></ul>
+    </div>
+  </section>
+
+</div>
+
+<!-- mobile dock -->
+<div class="dock">
+  <a data-pg="ov" class="on"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-map"/></svg>总览</a>
+  <a data-pg="d1"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-train"/></svg>Day1</a>
+  <a data-pg="d2"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-food"/></svg>Day2</a>
+  <a data-pg="d3"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bed"/></svg>Day3</a>
+</div>
+
+<footer><div class="wrap"></div></footer>
+
+<script>
+(function(){
+  var TZ='Asia/Shanghai';
+  var EVENTS=[
+    {t:'2026-10-01T08:57:00+08:00', label:'乘 D2311 · 泉州出发', hint:'泉州站候车室2号检票口 · 02车'},
+    {t:'2026-10-01T11:08:00+08:00', label:'抵达潮汕站', hint:'打车进潮州古城'},
+    {t:'2026-10-02T18:40:00+08:00', label:'乘 G8484 · 汕头出发', hint:'前往揭阳 · 记得到「揭阳站」下'},
+    {t:'2026-10-02T19:28:00+08:00', label:'抵达揭阳站', hint:'打车回 揭阳楼亚朵'},
+    {t:'2026-10-03T17:30:00+08:00', label:'乘 G8483 · 揭阳出发', hint:'到潮汕站换乘 D2326'},
+    {t:'2026-10-03T18:10:00+08:00', label:'换乘 D2326 · 潮汕发车', hint:'→ 泉州 20:05 · 换乘仅17分钟，务必提前候车'},
+    {t:'2026-10-03T20:05:00+08:00', label:'抵达泉州 · 到家', hint:'三天两夜收官'}
+  ];
+  var eps=EVENTS.map(function(e){return {ep:new Date(e.t).getTime(),label:e.label,hint:e.hint};});
+  function $(id){return document.getElementById(id);}
+  function pad(n){return(n<10?'0':'')+n;}
+  function fmt(ms){var s=Math.floor(ms/1000),m=Math.floor(s/60);s%=60;var h=Math.floor(m/60);m%=60;var d=Math.floor(h/24);h%=24;return[d,h,m,s];}
+  function tick(){
+    var now=Date.now();
+    try{$('nowClock').textContent='现在 '+new Intl.DateTimeFormat('zh-CN',{timeZone:TZ,month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date());}catch(e){}
+    var i,next=eps[0];
+    for(i=0;i<eps.length;i++){if(eps[i].ep>now){next=eps[i];break;}}
+    if(i>=eps.length){$('nextLabel').textContent='行程已圆满结束';$('nextHint').textContent='祝旅途愉快';['c-d','c-h','c-m','c-s'].forEach(function(x){$(x).textContent='00';});return;}
+    $('nextLabel').textContent=next.label;$('nextHint').textContent=next.hint;
+    var r=fmt(next.ep-now);
+    $('c-d').textContent=pad(r[0]);$('c-h').textContent=pad(r[1]);$('c-m').textContent=pad(r[2]);$('c-s').textContent=pad(r[3]);
+  }
+  tick();setInterval(tick,1000);
+
+  var stored=null;try{stored=localStorage.getItem('ths');}catch(e){}
+  var sun='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:20px;height:20px"><use href="#i-sun"/></svg>';
+  var moon='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:20px;height:20px"><use href="#i-moon"/></svg>';
+  function apply(){var m;if(stored){m=stored;}else{m=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',m);$('modeBtn').innerHTML=m==='dark'?sun:moon;}
+  apply();
+  $('modeBtn').addEventListener('click',function(){var c=document.documentElement.getAttribute('data-theme');stored=c==='dark'?'light':'dark';try{localStorage.setItem('ths',stored);}catch(e){}apply();});
+
+  var pages=$('pages'), tabs=[].slice.call(document.querySelectorAll('#sw button')),
+      dock=[].slice.call(document.querySelectorAll('.dock a'));
+  function sync(){var n=pages.scrollLeft,w=pages.clientWidth||1,idx=Math.round(n/w);tabs.forEach(function(t,i){t.classList.toggle('on',i===idx);});dock.forEach(function(a,i){a.classList.toggle('on',i===idx);});}
+  function go(i){var w=pages.clientWidth||1;pages.scrollTo({left:i*w,behavior:'smooth'});}
+  tabs.forEach(function(t,i){t.addEventListener('click',function(){go(i);});});
+  dock.forEach(function(a,i){a.addEventListener('click',function(){go(i);});});
+  pages.addEventListener('scroll',sync);
+  window.addEventListener('resize',sync);
+  sync();
+})();
+</script>
+</body>
+</html>
